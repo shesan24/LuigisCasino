@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { PairCard } from './PairCard';
-import { PopUp, OutCoinWindow, RuleWindow} from './PopUp';
+import { PairCard } from './Components/PairCard';
+import { PopUp, OutCoinWindow, RuleWindow} from './Components/PopUp';
 import ReactCountdownClock from 'react-countdown-clock';
 import { ToastContainer, toast } from 'react-toastify';
 
-import coin from './../../assets/coin.png';
-import medal from './../../assets/medal.png';
-import './../../css/pairAGone/PairAGone.css';
+import coin from './assets/coin.png';
+import medal from './assets/medal.png';
+import './css/PairAGone.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 class PairAGone extends Component{
@@ -15,7 +15,7 @@ class PairAGone extends Component{
         this.state = {
             deck: [],
             numCard: 20,
-            coin: props.coin,
+            userCoins: props.userCoins,
             score: 0,
             timer: 0,
 
@@ -29,7 +29,7 @@ class PairAGone extends Component{
             previousSelectCardName: null,
 
         }
-        this.coin = props.coin;
+        this.userCoins = props.userCoins;
         this.score = 0;
         this.board = [];
         this.isPlaceBet = false;
@@ -66,14 +66,14 @@ class PairAGone extends Component{
     // handle the place bet
     handlePlaceBet = () => {
         // if run out of coin, pop up the exit game window
-        if (this.state.coin == 0) {
+        if (this.state.userCoins == 0) {
             this.setState({isOutCoinWindow: true, isRuleWindow: false, timeUp:false});
         }
         // else place one bet
         else {
-            this.coin = this.coin - 1;
+            this.userCoins = this.userCoins - 1;
             this.isPlaceBet = true;
-            this.setState({coin: this.coin});
+            this.setState({userCoins: this.userCoins});
             this.betPlaced();
         }
 
@@ -315,7 +315,7 @@ class PairAGone extends Component{
                 </div>
                 <div className="pair-gameMenu-container">
                     <div className="pair-coin-div">
-                        <img className="pair-coin" src={coin}></img> {this.state.coin}
+                        <img className="pair-coin" src={coin}></img> {this.state.userCoins}
                     </div>
                     <button className="pair-btn pair-bet" onClick={this.handleStartGameClick}>
                         Start

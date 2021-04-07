@@ -1,5 +1,5 @@
 import React from 'react';
-import './../../css/pairAGone/PopUp.css';
+import './../css/PopUp.css';
 
 export const PopUp = (props) => {
     return (

@@ -7,9 +7,10 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Main from "./Main/Main";
 import Login from "./Login/Login";
 import MushroomRoulette from "./MushroomRoulette/MushroomRoulette";
+import PairAGone from "./PairAGone/PairAGone";
 
 function App() {
-  const [userCoins, setUserCoins] = useState(0);
+  const [userCoins, setUserCoins] = useState(1);
   const [username, setUsername] = useState("");
 
   return (
@@ -17,6 +18,13 @@ function App() {
       <Switch>
         <Route path="/mushroomroulette">
           <MushroomRoulette
+            username={username}
+            userCoins={userCoins}
+            setUserCoins={setUserCoins}
+          />
+        </Route>
+        <Route path="/pairagone">
+          <PairAGone
             username={username}
             userCoins={userCoins}
             setUserCoins={setUserCoins}

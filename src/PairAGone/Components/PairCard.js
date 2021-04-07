@@ -1,13 +1,13 @@
 import React from 'react';
-import MarioIcon from '../../assets/marioicon.png';
-import MushroomIcon from '../../assets/mushroomicon.png';
-import StarIcon from '../../assets/staricon.png';
-import LuigiIcon from '../../assets/luigiicon.png';
-import CloudIcon from '../../assets/cloudicon.png';
+import MarioIcon from '../assets/marioicon.png';
+import MushroomIcon from '../assets/mushroomicon.png';
+import StarIcon from '../assets/staricon.png';
+import LuigiIcon from '../assets/luigiicon.png';
+import CloudIcon from '../assets/cloudicon.png';
 
 import classNames from 'classnames';
 
-import './../../css/pairAGone/PairCard.css';
+import './../css/PairCard.css';
 
 export const PairCard = (props) => {
 
