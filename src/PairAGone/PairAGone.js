@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 import { PairCard } from './Components/PairCard';
 import { PopUp, OutCoinWindow, RuleWindow} from './Components/PopUp';
 import ReactCountdownClock from 'react-countdown-clock';
@@ -13,9 +14,11 @@ class PairAGone extends Component{
     constructor(props) {
         super(props);
         this.state = {
+            username: props.username,
+            userCoins: props.userCoins,
+
             deck: [],
             numCard: 20,
-            userCoins: props.userCoins,
             score: 0,
             timer: 0,
 
@@ -271,6 +274,13 @@ class PairAGone extends Component{
     render() {
         return (
             <div className="pair-view-body">
+                <div style={{marginTop: "10px"}}>
+                    <Link to="/">
+                        <button className="pair-btn pair-bet">
+                            Back
+                        </button>
+                    </Link>
+                </div>
                 <ToastContainer />
                 <div>
                     {this.state.timeUp && 
