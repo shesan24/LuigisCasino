@@ -1,0 +1,156 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.game-view{
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    grid-template-rows: 1fr;
+    gap: 0px 0px;
+    grid-template-areas:
+      ". .";
+  }
+
+  .htp {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 0px 0px;
+    grid-template-areas:
+      "."
+      ".";
+  }
+  
+  @font-face{
+      font-family: 'smb2';
+      src: url(../../fonts/smb2.ttf);
+      font-style: normal;
+      
+  }
+
+  .toastBody {
+    font-family: 'smb2';
+    font-size: 14px;
+  }
+
+  .gameInfo{
+    font-family: 'smb2';
+    font-size: 35px;
+  }
+  
+  .title{
+    width: 50%;
+    height: auto; 
+    margin-bottom: 100px
+    
+  }
+
+.game-board{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-template-areas:
+    ". . . ."
+    ". . . ."
+    ". . . .";
+}
+
+.button{
+    margin-top: 5px;
+}
+
+.mini-game-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+  }
+  
+  .hand-h1 {
+    font-size: 1rem;
+    color: rgb(101, 102, 105);
+    margin: 0;
+    font-weight: 500;
+    margin-top: 20px;
+  }
+  
+  .cards-container {
+    display: flex;
+  }
+  
+  .cards-container.users {
+    display: flex;
+    /* margin-top: 20px; */
+  }
+  
+  .actions-container {
+    display: flex;
+    height: 150px;
+  }
+  
+  .game-feed {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-right: 40px;
+  }
+  
+  .game-feed > h3 {
+    width: 150px;
+    margin: 0;
+    margin-top: 5px;
+  }
+  
+  .action-btns {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .btn {
+    width: 150px;
+    height: 40px;
+    border-radius: 9999px;
+    outline: none;
+    border: none;
+    /* margin-top: 10px; */
+    margin-right: 10px;
+    font-weight: bold;
+    box-shadow: 0px 7px 15px -2px rgba(0, 0, 0, 0.068);
+    transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+  }
+  
+  .btn:hover {
+    cursor: pointer;
+    transform: translateY(-3px);
+  }
+  
+  .bet {
+    background-color: white;
+    color: rgb(1, 194, 130);
+  }
+  
+  .action {
+    background-color: white;
+    color: rgb(194, 1, 1);
+    text-transform: capitalize;
+  }
+  
+  .btn.disabled:hover {
+    cursor: default;
+    transform: translateY(0);
+  }
+  
+  .btn.disabled {
+    background-color: rgb(231, 231, 231);
+    color: rgb(107, 107, 107);
+    text-transform: capitalize;
+  }
+  
