@@ -28,7 +28,7 @@ export const PicturePoker = ({ userCoins: coins, setUserCoins: setCoins }) => {
   };
 
   const initialCoins = 10;
-  const initialBet = 5;
+  const initialBet = 0;
   const initialAction = 'hold';
 
   // hooks
@@ -44,9 +44,7 @@ export const PicturePoker = ({ userCoins: coins, setUserCoins: setCoins }) => {
    * Handles the event when the bet button is clicked
    */
   const handleBetClick = () => {
-    console.log('here', gameState.round );
-    if (gameState.roundStage === 'betting') {
-      console.log('and also here');
+    if (gameState.roundStage === 'betting' && coins > 0) {
       setCoins(coins - 1);
       setBet(bet + 1);
     }
@@ -138,7 +136,6 @@ export const PicturePoker = ({ userCoins: coins, setUserCoins: setCoins }) => {
   }, [board]);
 
   useEffect(() => {
-    console.log('best hand', bestHand(board.usrHand, board.luigisHand));
     setGameState((prev) => {
       return {
         ...prev,
@@ -147,8 +144,14 @@ export const PicturePoker = ({ userCoins: coins, setUserCoins: setCoins }) => {
     });
   }, [gameState.roundStage]);
   useEffect(() => {
-    console.log(gameState);
-  }, [gameState]);
+    if (gameState.roundStage === 'result') {
+      let hand = bestHand(board.usrHand, board.luigisHand)[1][0];
+      console.log('bet:', bet, ' | hand', hand, ' | ', coins);
+      if (gameState.winner === 'user') setCoins(coins + hand + bet * 2);
+      if (gameState.winner === 'luigi') setCoins(coins - hand - bet * 2);
+    }
+    setBet(0);
+  }, [gameState.winner]);
 
   return (
     <div className="mini-game-container">
@@ -188,65 +191,56 @@ export const PicturePoker = ({ userCoins: coins, setUserCoins: setCoins }) => {
         })}
       </div>
       <div className="actions-container">
-        {coins > 0 ? (
-          <>
-            <div className="game-feed">
-              <h3 className="pph3">
-                <span
-                  style={{
-                    color: 'rgb(101, 102, 105)',
-                    fontWeight: '500',
-                    marginRight: '5px'
-                  }}
-                >
-                  Your coins:
-                </span>{' '}
-                {coins}
-              </h3>
-              <h3 className="pph3">
-                <span
-                  style={{
-                    color: 'rgb(101, 102, 105)',
-                    fontWeight: '500',
-                    marginRight: '5px'
-                  }}
-                >
-                  Current Bet:
-                </span>
-                {bet}
-              </h3>
-            </div>
-            <div className="action-btns">
-              {gameState.roundStage === 'betting' ? (
-                <>
-                  <button className="ppbtn bet" onClick={handleBetClick}>
-                    Bet Coins
-                  </button>
-                  <button onClick={handleActionClick} className="ppbtn action">
-                    {action}
-                  </button>
-                </>
-              ) : (
-                <>
-                  <button
-                    className="ppbtn bet disabled"
-                    onClick={handleBetClick}
-                  >
-                    Bet Coins
-                  </button>
-                  <button
-                    onClick={handleActionClick}
-                    className="ppbtn action disabled"
-                  >
-                    {action}
-                  </button>
-                </>
-              )}
-            </div>
-          </>
-        ) : (
-          <h1>You lose :(</h1>
-        )}
+        <div className="game-feed">
+          <h3 className="pph3">
+            <span
+              style={{
+                color: 'rgb(101, 102, 105)',
+                fontWeight: '500',
+                marginRight: '5px'
+              }}
+            >
+              Your coins:
+            </span>{' '}
+            {coins}
+          </h3>
+          <h3 className="pph3">
+            <span
+              style={{
+                color: 'rgb(101, 102, 105)',
+                fontWeight: '500',
+                marginRight: '5px'
+              }}
+            >
+              Current Bet:
+            </span>
+            {bet}
+          </h3>
+        </div>
+        <div className="action-btns">
+          {gameState.roundStage === 'betting' ? (
+            <>
+              <button className="ppbtn bet" onClick={handleBetClick}>
+                Bet Coins
+              </button>
+              <button onClick={handleActionClick} className="ppbtn action">
+                {action}
+              </button>
+            </>
+          ) : (
+            <>
+              <button className="ppbtn bet disabled" onClick={handleBetClick}>
+                Bet Coins
+              </button>
+              <button
+                onClick={handleActionClick}
+                className="ppbtn action disabled"
+              >
+                {action}
+              </button>
+            </>
+          )}
+        </div>
       </div>
       <div className="results-container">
         {gameState.roundStage === 'result' ? (
