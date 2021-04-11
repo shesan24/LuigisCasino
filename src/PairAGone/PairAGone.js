@@ -32,6 +32,7 @@ class PairAGone extends Component{
             previousSelectCardName: null,
 
         }
+        this.setUserCoins = props.setUserCoins;
         this.userCoins = props.userCoins;
         this.score = 0;
         this.board = [];
@@ -75,11 +76,31 @@ class PairAGone extends Component{
         // else place one bet
         else {
             this.userCoins = this.userCoins - 1;
+            this.setUserCoins(this.userCoins - 1);
             this.isPlaceBet = true;
             this.setState({userCoins: this.userCoins});
             this.betPlaced();
         }
 
+    }
+
+    // hanlde reward
+    getReward = (score) => {
+        if(score < 13 && score > 11) {
+          return 2
+        }
+        else if (score < 15 && score > 13) {
+          return 3
+        }
+        else if (score < 17 && score > 15) {
+          return 4
+        }
+        else if (score > 18) {
+          return 5
+        }
+        else {
+          return 0
+        }
     }
 
     // notification: bet is not placed
@@ -120,7 +141,12 @@ class PairAGone extends Component{
         this.board = cardList;
         this.setState({deck: cardList});
         // set a game timer
-        setTimeout(() => {this.setState({ timeUp:true , gameState:false})}, this.timeout);
+        setTimeout(() => {
+            var reward = this.getReward(this.score);
+            console.log(reward);
+            this.setUserCoins(this.userCoins + reward);
+            this.setState({ timeUp:true , gameState:false, userCoins: reward+this.userCoins});
+            },this.timeout);
     }
 
     // shuffle deck 
@@ -323,6 +349,7 @@ class PairAGone extends Component{
                         }
                     </div>
                 </div>
+                {!this.state.gameState &&
                 <div className="pair-gameMenu-container">
                     <div className="pair-coin-div">
                         <img className="pair-coin" src={coin}></img> {this.state.userCoins}
@@ -337,6 +364,7 @@ class PairAGone extends Component{
                         <img className="pair-medal" src={medal}/>{this.state.score}
                     </div>
                 </div>
+                }
             </div>
           );
         }
