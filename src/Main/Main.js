@@ -31,7 +31,7 @@ function Main({ username, userCoins }) {
         <Link to="/memorymatch">MemoryMatch</Link>
       </Row>
       <Row>
-        <Link>Game 3</Link>
+      <Link to="/pairagone">Pair-A-Gone</Link>
       </Row>
     </Container>
   );
