@@ -25,10 +25,10 @@ function Main({ username, userCoins }) {
         </h3>
       </div>
       <Row>
-        <Link to="/mushroomroulette">MushroomRoulette</Link>{" "}
+        <Link to="/mushroomroulette">MushroomRoulette</Link>
       </Row>
       <Row>
-        <Link>Game 2</Link>
+        <Link to="/memorymatch">MemoryMatch</Link>
       </Row>
       <Row>
         <Link>Game 3</Link>

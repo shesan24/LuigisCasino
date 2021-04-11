@@ -8,6 +8,7 @@ import Main from "./Main/Main";
 import Login from "./Login/Login";
 import MushroomRoulette from "./MushroomRoulette/MushroomRoulette";
 import PairAGone from "./PairAGone/PairAGone";
+import { MemoryMatch } from './MemoryMatch/Components/MemoryMatch';
 
 function App() {
   const [userCoins, setUserCoins] = useState(1);
@@ -23,8 +24,8 @@ function App() {
             setUserCoins={setUserCoins}
           />
         </Route>
-        <Route path="/pairagone">
-          <PairAGone
+        <Route path="/memorymatch">
+          <MemoryMatch
             username={username}
             userCoins={userCoins}
             setUserCoins={setUserCoins}
@@ -36,6 +37,7 @@ function App() {
         <Route path="/">
           <Main username={username} userCoins={userCoins} />
         </Route>
+        
       </Switch>
     </Router>
   );
