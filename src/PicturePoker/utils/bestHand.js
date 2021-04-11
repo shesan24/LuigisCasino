@@ -4,7 +4,7 @@ export function bestHand(usersHand, luigisHand) {
   if (uv[0] > lv[0]) return ['user', uv];
   if (uv[0] < lv[0]) return ['luigi', lv];
   if (uv[0] === lv[0]) {
-    return [tieBreaker(uv, lv), [uv, lv]];
+    return [tieBreaker(uv, lv), 5];
   }
 }
 
