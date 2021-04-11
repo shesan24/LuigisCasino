@@ -25,13 +25,19 @@ function Main({ username, userCoins }) {
         </h3>
       </div>
       <Row>
-        <Link to="/mushroomroulette">MushroomRoulette</Link>
+        <Link to="/mushroomroulette">Mushroom Roulette</Link>
       </Row>
       <Row>
-        <Link to="/memorymatch">MemoryMatch</Link>
+        <Link to="/memorymatch">Memory Match</Link>
       </Row>
       <Row>
       <Link to="/pairagone">Pair-A-Gone</Link>
+      </Row>
+      <Row>
+      <Link to="/marioslot">Mario Slot</Link>
+      </Row>
+      <Row>
+      <Link to="/picturepoker">Picture Poker</Link>
       </Row>
     </Container>
   );
