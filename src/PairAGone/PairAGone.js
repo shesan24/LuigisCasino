@@ -334,7 +334,7 @@ class PairAGone extends Component{
                         place bet
                     </button>
                     <div className="pair-score-div">
-                        <img className="pair-medal" src={medal}/> {this.state.score}
+                        <img className="pair-medal" src={medal}/>{this.state.score}
                     </div>
                 </div>
             </div>

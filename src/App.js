@@ -31,6 +31,13 @@ function App() {
             setUserCoins={setUserCoins}
           />
         </Route>
+        <Route path="/pairagone">
+          <PairAGone
+            username={username}
+            userCoins={userCoins}
+            setUserCoins={setUserCoins}
+          />
+        </Route>
         <Route path="/login">
           <Login setUsername={setUsername} setUserCoins={setUserCoins} />
         </Route>
