@@ -7,10 +7,11 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Main from "./Main/Main";
 import Login from "./Login/Login";
 import MushroomRoulette from "./MushroomRoulette/MushroomRoulette";
+import PairAGone from "./PairAGone/PairAGone";
 import { MemoryMatch } from './MemoryMatch/Components/MemoryMatch';
 
 function App() {
-  const [userCoins, setUserCoins] = useState(0);
+  const [userCoins, setUserCoins] = useState(1);
   const [username, setUsername] = useState("");
 
   return (
@@ -25,6 +26,13 @@ function App() {
         </Route>
         <Route path="/memorymatch">
           <MemoryMatch
+            username={username}
+            userCoins={userCoins}
+            setUserCoins={setUserCoins}
+          />
+        </Route>
+        <Route path="/pairagone">
+          <PairAGone
             username={username}
             userCoins={userCoins}
             setUserCoins={setUserCoins}
