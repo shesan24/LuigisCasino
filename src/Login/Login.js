@@ -34,9 +34,11 @@ function Login({ setUsername, setUserCoins }) {
             Username:{" "}
             <input type="text" value={localUsername} onChange={handleChange} />
           </label>{" "}
-          <Button variant="dark" onClick={handleSubmit}>
-            <Link to="/">Submit</Link>
-          </Button>
+          <Link to="">
+            <Button variant="dark" onClick={handleSubmit}>
+              Register
+            </Button>
+          </Link>
         </form>
       </div>
     </Container>

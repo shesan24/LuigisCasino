@@ -14,7 +14,7 @@ const SlotMachine = ({ userCoins, setUserCoins }) => {
   const [start, setStart] = useState(0);
   const [stop, setStop] = useState(0);
 
-  useEffect(() => {setStart(setTimeout(() => {handleStart()}, 5000))}, [])
+  //useEffect(() => {setStart(setTimeout(() => {handleStart()}, 5000))}, [])
   useEffect(() => {setStop(setTimeout(() => {handleStop()}, 10000))}, [isRunning])
 
   const handleStart = () => {
