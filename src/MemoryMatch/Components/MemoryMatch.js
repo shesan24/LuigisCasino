@@ -9,6 +9,7 @@ import "../css/MemoryMatch.css"
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import {Redirect } from "react-router-dom";
+import Back from './Back'
 
 
 export const MemoryMatch = ({username, userCoins, setUserCoins}) => {
@@ -197,6 +198,7 @@ export const MemoryMatch = ({username, userCoins, setUserCoins}) => {
 
   return (
     <div className="mini-game-container" style={{backgroundColor: 'rgb(22, 29, 39)'}}>
+      <Back/>
       <img src={MemoryPic} className="title" />
       <ToastContainer bodyClassName="toastBody"/>
       <div className="game-view">
