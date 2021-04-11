@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import './../css/PopUp.css';
 
 export const PopUp = (props) => {
@@ -7,7 +8,9 @@ export const PopUp = (props) => {
           <p class="pair-message">Times Up! Your Score is {props.score}</p>
           <div class="pair-options">
             <button class="pair-btn" onClick={props.handleReplay}>Replay</button>
-            <button class="pair-btn">Exit</button>
+            <Link to="/">
+              <button class="pair-btn">Exit</button>
+            </Link> 
           </div>
         </div>
     )
@@ -18,8 +21,10 @@ export const OutCoinWindow = (props) => {
     <div class="pair-modal">
       <p class="pair-message">You are run out of coin, Please exit the game</p>
       <div class="pair-options">
+        <Link to="/">
             <button class="pair-btn">Exit</button>
-          </div>
+        </Link>   
+      </div>
     </div>
   )
 }
