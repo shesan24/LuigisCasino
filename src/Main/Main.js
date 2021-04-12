@@ -9,16 +9,17 @@ function Main({ username, userCoins }) {
 
   return (
     <Container>
-      <div
+      <h1
         className="m-5"
         style={{
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          fontFamily: "smb2",
         }}
       >
         Luigi's Casino
-      </div>
+      </h1>
       <div className="m-5" style={{ display: "flex", alignItems: "center" }}>
         <h3 className="ml-5">
           Username: {username} | Coins: {userCoins}
@@ -31,13 +32,13 @@ function Main({ username, userCoins }) {
         <Link to="/memorymatch">Memory Match</Link>
       </Row>
       <Row>
-      <Link to="/pairagone">Pair-A-Gone</Link>
+        <Link to="/pairagone">Pair-A-Gone</Link>
       </Row>
       <Row>
-      <Link to="/marioslot">Mario Slot</Link>
+        <Link to="/marioslot">Mario Slot</Link>
       </Row>
       <Row>
-      <Link to="/picturepoker">Picture Poker</Link>
+        <Link to="/picturepoker">Picture Poker</Link>
       </Row>
     </Container>
   );
