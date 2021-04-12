@@ -34,6 +34,7 @@ class PairAGone extends Component{
         }
         this.setUserCoins = props.setUserCoins;
         this.userCoins = props.userCoins;
+        this.betCoins = 0;
         this.score = 0;
         this.board = [];
         this.isPlaceBet = false;
@@ -76,6 +77,7 @@ class PairAGone extends Component{
         // else place one bet
         else {
             this.userCoins = this.userCoins - 1;
+            this.betCoins = this.betCoins + 1;
             this.setUserCoins(this.userCoins - 1);
             this.isPlaceBet = true;
             this.setState({userCoins: this.userCoins});
@@ -84,19 +86,19 @@ class PairAGone extends Component{
 
     }
 
-    // hanlde reward
-    getReward = (score) => {
+    // handle reward
+    getReward = (score, betCoin) => {
         if(score < 13 && score > 11) {
-          return 2
+          return parseInt(2 * betCoin)
         }
         else if (score < 15 && score > 13) {
-          return 3
+          return parseInt(3 * betCoin)
         }
         else if (score < 17 && score > 15) {
-          return 4
+          return parseInt(4 * betCoin)
         }
         else if (score > 18) {
-          return 5
+          return parseInt(5 * betCoin)
         }
         else {
           return 0
@@ -142,8 +144,9 @@ class PairAGone extends Component{
         this.setState({deck: cardList});
         // set a game timer
         setTimeout(() => {
-            var reward = this.getReward(this.score);
-            console.log(reward);
+            var reward = this.getReward(this.score, this.betCoins);
+            this.betCoins = 0;
+            this.userCoins = this.userCoins + reward;
             this.setUserCoins(this.userCoins + reward);
             this.setState({ timeUp:true , gameState:false, userCoins: reward+this.userCoins});
             },this.timeout);
@@ -299,72 +302,74 @@ class PairAGone extends Component{
 
     render() {
         return (
-            <div className="pair-view-body">
-                <div style={{marginTop: "10px"}}>
-                    <Link to="/">
-                        <button className="pair-btn pair-bet">
-                            Back
-                        </button>
-                    </Link>
-                </div>
-                <ToastContainer />
-                <div>
-                    {this.state.timeUp && 
-                        <PopUp
-                            handleReplay={this.handleReplay}
-                            score={this.state.score}
-                        />
-                    }
-                    {this.state.isRuleWindow &&
-                        <RuleWindow/>
-                    }
-                    {this.state.isOutCoinWindow && 
-                        <OutCoinWindow/>
-                    }
-                </div>
-                <div>
-                    {this.state.gameState && <ReactCountdownClock
-                        seconds={20}
-                        color="#000"
-                        alpha={0.9}
-                        size={100}
-                        // onComplete={myCallback}
-                    />}
-                </div>
-                <div className="pair-view-container">
-                    <div className="pair-board-container">
-                        {this.state.deck.length > 0 && this.state.deck.map((card) => {
-                            if (card != undefined && card.display != false) {
-                                return(
-                                    <PairCard 
-                                      name={card.name}
-                                      value={card.value}
-                                      onChange={card.onChange}
-                                      id={card.id}
-                                      isFocused={card.isFocused}
-                                    />
-                                )
-                            }
-                        })
+            <div className="pair-a-gone-body">
+                <div className="pair-view-body">
+                    <div style={{paddingTop: "10px", paddingLeft: "10px"}}>
+                        <Link to="/">
+                            <button className="pair-btn pair-bet">
+                                Back
+                            </button>
+                        </Link>
+                    </div>
+                    <ToastContainer />
+                    <div>
+                        {this.state.timeUp && 
+                            <PopUp
+                                handleReplay={this.handleReplay}
+                                score={this.state.score}
+                            />
+                        }
+                        {this.state.isRuleWindow &&
+                            <RuleWindow/>
+                        }
+                        {this.state.isOutCoinWindow && 
+                            <OutCoinWindow/>
                         }
                     </div>
-                </div>
-                {!this.state.gameState &&
-                <div className="pair-gameMenu-container">
-                    <div className="pair-coin-div">
-                        <img className="pair-coin" src={coin}></img> {this.state.userCoins}
+                    <div>
+                        {this.state.gameState && <ReactCountdownClock
+                            seconds={20}
+                            color="#000"
+                            alpha={0.9}
+                            size={100}
+                            // onComplete={myCallback}
+                        />}
                     </div>
-                    <button className="pair-btn pair-bet" onClick={this.handleStartGameClick}>
-                        Start
-                    </button>
-                    <button className="pair-btn pair-bet" onClick={this.handlePlaceBet}>
-                        place bet
-                    </button>
-                    <div className="pair-score-div">
-                        <img className="pair-medal" src={medal}/>{this.state.score}
+                    <div className="pair-view-container">
+                        <div className="pair-board-container">
+                            {this.state.deck.length > 0 && this.state.deck.map((card) => {
+                                if (card != undefined && card.display != false) {
+                                    return(
+                                        <PairCard 
+                                          name={card.name}
+                                          value={card.value}
+                                          onChange={card.onChange}
+                                          id={card.id}
+                                          isFocused={card.isFocused}
+                                        />
+                                    )
+                                }
+                            })
+                            }
+                        </div>
                     </div>
+                    {!this.state.gameState &&
+                    <div className="pair-gameMenu-container">
+                        <div className="pair-coin-div">
+                            <img className="pair-coin" src={coin}></img> {this.state.userCoins}
+                        </div>
+                        <button className="pair-btn pair-bet" onClick={this.handleStartGameClick}>
+                            Start
+                        </button>
+                        <button className="pair-btn pair-bet" onClick={this.handlePlaceBet}>
+                            place bet
+                        </button>
+                        <div className="pair-score-div">
+                            <img className="pair-medal" src={medal}/>{this.state.score}
+                        </div>
+                    </div>
+                    }
                 </div>
-                }
             </div>
           );
         }
