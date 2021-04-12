@@ -37,14 +37,13 @@
 
   .gameInfo{
     font-family: 'smb2';
-    font-size: 35px;
+    font-size: 30px;
   }
   
   .title{
     width: 50%;
     height: auto; 
-    margin-bottom: 100px
-    
+    margin-bottom: 50px
   }
 
 .game-board{
