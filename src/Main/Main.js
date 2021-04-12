@@ -2,6 +2,7 @@ import { Link, Redirect } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import CardGroup from "react-bootstrap/CardGroup";
 import Row from "react-bootstrap/Row";
+import { useState } from "react";
 
 import GameCard1 from "./Components/Gamecard1";
 import GameCard2 from "./Components/Gamecard2";
@@ -9,9 +10,14 @@ import GameCard3 from "./Components/Gamecard3";
 import GameCard4 from "./Components/Gamecard4";
 import GameCard5 from "./Components/Gamecard5";
 
-function Main({ username, userCoins }) {
+function Main({ username, userCoins, setUserCoins}) {
+
   if (username === "") {
-    return <Redirect to="/login" />;
+    return <Redirect to="/register" />;
+  }
+
+  const refillBalance = () => {
+    setUserCoins(10)
   }
 
   return (
@@ -38,6 +44,11 @@ function Main({ username, userCoins }) {
         <h3 className="ml-5">
           Username: {username} | Coins: {userCoins}
         </h3>
+        
+        <button type="button" className="btn btn-primary" style={{marginLeft: '20px'}} disabled={userCoins != 0} onClick={refillBalance}>Refill Balance</button>
+        <Link to="/register">
+        <button type="button" className="btn btn-primary">Exit Session</button>
+        </Link>
       </div>
       <Row className="mx-5 mb-5">
         <CardGroup>
@@ -48,21 +59,7 @@ function Main({ username, userCoins }) {
           <GameCard5 userCoins={userCoins} />
         </CardGroup>
       </Row>
-      {/* <Row>
-        <Link to="/mushroomroulette">Mushroom Roulette</Link>
-      </Row>
-      <Row>
-        <Link to="/memorymatch">Memory Match</Link>
-      </Row>
-      <Row>
-        <Link to="/pairagone">Pair-A-Gone</Link>
-      </Row>
-      <Row>
-        <Link to="/marioslot">Mario Slot</Link>
-      </Row>
-      <Row>
-        <Link to="/picturepoker">Picture Poker</Link>
-      </Row> */}
+      
     </Container>
   );
 }

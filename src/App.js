@@ -54,11 +54,11 @@ function App() {
             setUserCoins={setUserCoins}
           />
         </Route>
-        <Route path="/login">
+        <Route path="/register">
           <Register setUsername={setUsername} setUserCoins={setUserCoins} />
         </Route>
         <Route path="/">
-          <Main username={username} userCoins={userCoins} />
+          <Main username={username} userCoins={userCoins} setUserCoins={setUserCoins} />
         </Route>
         
       </Switch>
