@@ -9,14 +9,7 @@ function Main({ username, userCoins }) {
 
   return (
     <Container>
-      <div
-        className="m-5"
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
+      <div>
         Luigi's Casino
       </div>
       <div className="m-5" style={{ display: "flex", alignItems: "center" }}>
