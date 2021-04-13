@@ -173,7 +173,7 @@ export const PicturePoker = ({ userCoins: coins, setUserCoins: setCoins }) => {
         }
       }
       if (gameState.winner === 'tie') {
-        setCoins(bet);
+        setCoins(coins + bet);
       }
     }
   }, [gameState.winner]);
