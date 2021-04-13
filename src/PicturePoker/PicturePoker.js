@@ -153,8 +153,8 @@ export const PicturePoker = ({ userCoins: coins, setUserCoins: setCoins }) => {
       console.log('hand', hand, '   coins', coins);
       if (gameState.winner == 'user') setCoins(coins + hand + bet);
       if (gameState.winner == 'luigi') {
-        console.log('coins', coins - hand + bet);
-        if (coins - hand + bet <= 0) {
+        // console.log('coins', coins - (hand + bet));
+        if (coins - (hand + bet) <= 0) {
           setGameState((prev) => {
             console.log('we are here');
             return {
