@@ -52,41 +52,43 @@ export const PicturePoker = ({ userCoins: coins, setUserCoins: setCoins }) => {
   };
 
   const handleActionClick = () => {
-    if (action === 'draw') {
+    if (bet !== 0) {
+      if (action === 'draw') {
+        setBoard((prev) => {
+          // make new array
+          const newArray = prev.usrHand.map((card, index) => {
+            // if card is focused
+            if (card[2]) {
+              return [randomCard(), card[1], false];
+            } else {
+              return card;
+            }
+          });
+          return {
+            ...prev,
+            usrHand: newArray
+          };
+        });
+        setGameState({
+          round: 0,
+          roundStage: 'result' // betting | result
+        });
+      } else {
+        setGameState({
+          round: 0,
+          roundStage: 'result' // betting | result
+        });
+      }
       setBoard((prev) => {
-        // make new array
-        const newArray = prev.usrHand.map((card, index) => {
-          // if card is focused
-          if (card[2]) {
-            return [randomCard(), card[1], false];
-          } else {
-            return card;
-          }
+        const newArray = prev.luigisHand.map((card) => {
+          return [card[0], 'front'];
         });
         return {
           ...prev,
-          usrHand: newArray
+          luigisHand: newArray
         };
       });
-      setGameState({
-        round: 0,
-        roundStage: 'result' // betting | result
-      });
-    } else {
-      setGameState({
-        round: 0,
-        roundStage: 'result' // betting | result
-      });
     }
-    setBoard((prev) => {
-      const newArray = prev.luigisHand.map((card) => {
-        return [card[0], 'front'];
-      });
-      return {
-        ...prev,
-        luigisHand: newArray
-      };
-    });
   };
 
   /**
@@ -151,8 +153,10 @@ export const PicturePoker = ({ userCoins: coins, setUserCoins: setCoins }) => {
       console.log('hand', hand, '   coins', coins);
       if (gameState.winner == 'user') setCoins(coins + hand + bet);
       if (gameState.winner == 'luigi') {
+        console.log('coins', coins - hand + bet);
         if (coins - hand + bet <= 0) {
           setGameState((prev) => {
+            console.log('we are here');
             return {
               ...prev,
               roundStage: 'gameover',
@@ -163,7 +167,7 @@ export const PicturePoker = ({ userCoins: coins, setUserCoins: setCoins }) => {
         setCoins(coins - (hand + bet));
       }
       if (gameState.winner === 'tie') {
-        setCoins(bet)
+        setCoins(bet);
       }
     }
   }, [gameState.winner]);
@@ -243,9 +247,21 @@ export const PicturePoker = ({ userCoins: coins, setUserCoins: setCoins }) => {
                   <button className="ppbtn bet" onClick={handleBetClick}>
                     Bet Coins
                   </button>
-                  <button onClick={handleActionClick} className="ppbtn action">
-                    {action}
-                  </button>
+                  {bet !== 0 ? (
+                    <button
+                      onClick={handleActionClick}
+                      className="ppbtn action"
+                    >
+                      {action}
+                    </button>
+                  ) : (
+                    <button
+                      onClick={handleActionClick}
+                      className="ppbtn action disabled"
+                    >
+                      {action}
+                    </button>
+                  )}
                 </>
               ) : (
                 <>
