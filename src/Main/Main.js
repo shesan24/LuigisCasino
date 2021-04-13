@@ -45,9 +45,9 @@ function Main({ username, userCoins, setUserCoins}) {
           Username: {username} | Coins: {userCoins}
         </h3>
         
-        <button type="button" className="btn btn-primary" style={{marginLeft: '20px'}} disabled={userCoins != 0} onClick={refillBalance}>Refill Balance</button>
+        {/* <button type="button" className="btn btn-primary" style={{marginLeft: '20px'}} disabled={userCoins != 0} onClick={refillBalance}>Refill Balance</button> */}
         <Link to="/register">
-        <button type="button" className="btn btn-primary">Exit Session</button>
+        <button type="button" className="btn btn-primary" style={{marginLeft: '20px'}}>Exit Session</button>
         </Link>
       </div>
       <Row className="mx-5 mb-5">

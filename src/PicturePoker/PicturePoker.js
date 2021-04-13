@@ -5,7 +5,7 @@ import { Card } from './components/Card';
 import './css/PicturePoker.css';
 import { Link } from 'react-router-dom';
 
-export const PicturePoker = ({ userCoins: coins, setUserCoins: setCoins }) => {
+export const PicturePoker = ({ userName, userCoins: coins, setUserCoins: setCoins }) => {
   const initialGameState = {
     round: 0,
     roundStage: 'betting', // betting | result
@@ -226,6 +226,18 @@ export const PicturePoker = ({ userCoins: coins, setUserCoins: setCoins }) => {
             <>
               {' '}
               <div className="game-feed">
+              <h3 className="pph3">
+                  <span
+                    style={{
+                      color: 'rgb(101, 102, 105)',
+                      fontWeight: '500',
+                      marginRight: '5px'
+                    }}
+                  >
+                    Username: 
+                  </span>{' '}
+                  {userName}
+                </h3>
                 <h3 className="pph3">
                   <span
                     style={{

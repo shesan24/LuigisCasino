@@ -49,7 +49,7 @@ function App() {
         </Route>
         <Route path="/picturepoker">
           <PicturePoker
-            username={username}
+            userName={username}
             userCoins={userCoins}
             setUserCoins={setUserCoins}
           />
