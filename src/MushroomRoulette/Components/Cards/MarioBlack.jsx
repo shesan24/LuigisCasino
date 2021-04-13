@@ -1,31 +1,76 @@
-import React, {useState} from 'react'
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import mario from '../../assets/mario.png'; 
+import React, { useState } from "react";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import mario from "../../assets/mario.png";
+import Row from "react-bootstrap/Row";
 
-const MarioBlack = ({thisCoins, userCoins, setThisCoins, setUserCoins}) => {
+const MarioBlack = ({ thisCoins, userCoins, setThisCoins, setUserCoins }) => {
+  const addCoins = () => {
+    setThisCoins(thisCoins++);
+    setUserCoins(userCoins--);
+  };
 
-    const addCoins = () => {
-        setThisCoins(thisCoins++);
-        setUserCoins(userCoins--);
-    };
+  const subtractCoins = () => {
+    setThisCoins(thisCoins--);
+    setUserCoins(userCoins++);
+  };
 
-    const subtractCoins = () => {
-        setThisCoins(thisCoins--);
-        setUserCoins(userCoins++);
-    };
-
-    return(
-        <Card bg='dark' border="dark" style={{ width: '18rem' }}>
-            <Card.Header style={{color:'white'}}>Mario</Card.Header> 
-            <Card.Img src={mario}></Card.Img>
-            <Card.Body>
-            <Button disabled={userCoins <= 0} variant="light" onClick={addCoins}>+</Button>{' '}
-            <Button disabled={thisCoins <= 0} variant="light" onClick={subtractCoins}>-</Button>{' '}       
-            <Card.Text style={{color:'white'}}>Coins: {thisCoins}</Card.Text> 
-            </Card.Body>
-        </Card> 
-    )
-}
+  return (
+    <Card
+      className="p-2"
+      bg="dark"
+      border="dark"
+      style={{
+        width: "18rem",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Card.Header style={{ color: "white" }}>Mario</Card.Header>
+      <Card.Img src={mario}></Card.Img>
+      <Card.Body>
+        <Row
+          style={{
+            width: "18rem",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <div className="btn btn-sm col-6">
+            <Button
+              disabled={userCoins <= 0}
+              variant="light"
+              onClick={addCoins}
+            >
+              +
+            </Button>
+          </div>
+          <div className="btn btn-sm col-6">
+            <Button
+              disabled={thisCoins <= 0}
+              variant="light"
+              onClick={subtractCoins}
+            >
+              -
+            </Button>
+          </div>
+        </Row>
+        <Card.Text
+          className="mt-2"
+          style={{
+            color: "white",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          Coins: {thisCoins}
+        </Card.Text>
+      </Card.Body>
+    </Card>
+  );
+};
 
 export default MarioBlack;

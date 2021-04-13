@@ -1,3 +1,40 @@
+.pair-a-gone-body {
+  width: 100vw;
+  height: 100vh;
+  color:black;
+  font-family: "Questrial", sans-serif;
+  background-color: #ffec63;
+  background-image: linear-gradient(
+      45deg,
+      #ffd966 25%,
+      transparent 25%,
+      transparent 75%,
+      #ffd966 75%,
+      #ffd966
+    ),
+    linear-gradient(
+      -45deg,
+      #ffd966 25%,
+      transparent 25%,
+      transparent 75%,
+      #ffd966 75%,
+      #ffd966
+    );
+  background-size: 60px 60px;
+  background-position: 0 0;
+  animation: slide 4s infinite linear;
+}
+
+@keyframes slide {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: -120px 60px;
+  }
+}
+
 .pair-view-container {
     width: 100%;
     height: 80vh;

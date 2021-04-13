@@ -191,9 +191,9 @@ export const MemoryMatch = ({username, userCoins, setUserCoins}) => {
 
   var extraStyles = ''
   if (isEnabled){
-    extraStyles = {width: '410px', height: '430px', marginLeft: '90px', backgroundColor: 'rgb(201, 76, 76)'}
+    extraStyles = {width: '410px', height: '405px', marginLeft: '65px', backgroundColor: 'rgb(201, 76, 76)'}
   } else {
-    extraStyles = {width: '410px', height: '535px',  marginLeft: '90px', backgroundColor: 'rgb(201, 76, 76)'}
+    extraStyles = {width: '410px', height: '495px',  marginLeft: '65px', backgroundColor: 'rgb(201, 76, 76)'}
   }
 
   return (

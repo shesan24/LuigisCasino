@@ -26,16 +26,16 @@ function Login({ setUsername, setUserCoins }) {
           alignItems: "center",
         }}
       >
-        Luigi's Casino
+        <h1 style={{fontFamily: 'smb2'}}>Luigi's Casino</h1>
       </div>
-      <div className="m-5" style={{ display: "flex", alignItems: "center" }}>
-        <form>
+      <div className="m-5" style={{ display: "flex", alignItems: "center"}}>
+        <form style={{marginLeft: '300px'}}>
           <label>
             Username:{" "}
             <input type="text" value={localUsername} onChange={handleChange} />
           </label>{" "}
           <Link to="">
-            <Button variant="dark" onClick={handleSubmit}>
+            <Button variant="dark" onClick={handleSubmit} >
               Register
             </Button>
           </Link>

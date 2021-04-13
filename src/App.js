@@ -5,7 +5,7 @@ import { useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Main from "./Main/Main";
-import Login from "./Login/Login";
+import Register from "./Login/Register";
 import MushroomRoulette from "./MushroomRoulette/MushroomRoulette";
 import PairAGone from "./PairAGone/PairAGone";
 import { MemoryMatch } from './MemoryMatch/Components/MemoryMatch';
@@ -54,11 +54,11 @@ function App() {
             setUserCoins={setUserCoins}
           />
         </Route>
-        <Route path="/login">
-          <Login setUsername={setUsername} setUserCoins={setUserCoins} />
+        <Route path="/register">
+          <Register setUsername={setUsername} setUserCoins={setUserCoins} />
         </Route>
         <Route path="/">
-          <Main username={username} userCoins={userCoins} />
+          <Main username={username} userCoins={userCoins} setUserCoins={setUserCoins} />
         </Route>
         
       </Switch>
