@@ -148,6 +148,7 @@ export const PicturePoker = ({ userCoins: coins, setUserCoins: setCoins }) => {
   useEffect(() => {
     if (gameState.roundStage === 'result') {
       let hand = bestHand(board.usrHand, board.luigisHand)[1][0];
+      console.log('hand', hand, '   coins', coins);
       if (gameState.winner == 'user') setCoins(coins + hand + bet);
       if (gameState.winner == 'luigi') {
         if (coins - hand + bet <= 0) {
@@ -159,8 +160,10 @@ export const PicturePoker = ({ userCoins: coins, setUserCoins: setCoins }) => {
             };
           });
         }
-
         setCoins(coins - (hand + bet));
+      }
+      if (gameState.winner === 'tie') {
+        setCoins(bet)
       }
     }
   }, [gameState.winner]);
