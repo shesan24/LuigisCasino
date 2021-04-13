@@ -310,6 +310,7 @@ class PairAGone extends Component{
                                 Back
                             </button>
                         </Link>
+                        <div style={{borderRadius: "20px" ,verticalAlign: "middle", textAlign: "center", padding: "8px 0", color: "#01C282", fontWeight: "bold", display: "inline-block", backgroundColor: "white", width: "400px", height: "40px"}}>USERNAME : {this.state.username}</div>
                     </div>
                     <ToastContainer />
                     <div>
