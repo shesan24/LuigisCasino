@@ -60,7 +60,6 @@ function App() {
         <Route path="/">
           <Main username={username} userCoins={userCoins} setUserCoins={setUserCoins} />
         </Route>
-        
       </Switch>
     </Router>
   );
