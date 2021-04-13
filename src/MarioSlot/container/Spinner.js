@@ -64,9 +64,9 @@ class Spinner extends React.Component {
     const { wheels } = this.state
 
     return (
-      <React.Fragment>
+      <div className="m-5" style={{ display: "flex", alignItems: "center" }}>
         {wheels.map((wheel, id) => (<Wheel key={`${id}_${wheel}`} image={wheel} />))}
-      </React.Fragment>
+      </div>
     )
   }
 }

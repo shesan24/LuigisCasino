@@ -2,9 +2,9 @@ import uniq from 'lodash/uniq';
 import { default as React, useEffect, useState } from 'react';
 import Spinner from './Spinner';
 
-const MAX_PRIZE = 50
-const CONSEC_PRIZE = 10
-const NON_CONSEC_PRIZE = 5
+const MAX_PRIZE = 10
+const CONSEC_PRIZE = 5
+const NON_CONSEC_PRIZE = 2
 
 const SlotMachine = ({ userCoins, setUserCoins }) => {
   const [isRunning, setIsRunning] = useState(false);
@@ -71,13 +71,13 @@ const SlotMachine = ({ userCoins, setUserCoins }) => {
   return (
     <React.Fragment>
       <Spinner spin={isRunning} onStop={handleResult} />
-      <button onClick={handleStart} disabled={!isRunning && userCoins <= 0}>Start</button>
-      <button onClick={handleStop} disabled={!isRunning}>Stop</button>
+      <button className="btn btn-primary" style={{fontFamily: 'smb2', fontSize: '10px', width: '150px', marginBottom: '10px'}} onClick={handleStart} disabled={!isRunning && userCoins <= 0}>Start</button>
+      <button className="btn btn-primary" style={{fontFamily: 'smb2', fontSize: '10px', width: '150px', marginBottom: '10px'}} onClick={handleStop} disabled={!isRunning}>Stop</button>
       <div>
-        {winner && <div>You win! Your prize: {prize} Coins</div>}
+        {winner && <h3 style={{ fontFamily: 'smb2', fontSize: '10px', width: '250px', color: 'white', textAlign: 'center' }}>You win! Your prize: {prize} Coins</h3>}
         {loser &&
         <React.Fragment>
-          <div>You lose</div>
+          <h3 style={{ fontFamily: 'smb2', fontSize: '10px', width: '250px', color: 'white', textAlign: 'center'}}> You lose</h3>
           </React.Fragment>
         }
       </div>

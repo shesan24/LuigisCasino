@@ -1,17 +1,17 @@
-import React from 'react';
-import Back from "./components/Back";
-import Title from "./components/Title";
-import User from "./components/User";
+import Back from './components/Back';
+import Title from './components/Title';
+import User from './components/User';
 import SlotMachine from './container/SlotMachine';
+import './css/MarioSlot.css'
 
 const MarioSlot = ({ username, userCoins, setUserCoins }) => {
     return (
-        <React.Fragment>
+        <div className="mario-slot-container">
         <Back />
         <User username={username} userCoins={userCoins} />
         <Title />
         <SlotMachine userCoins={userCoins} setUserCoins={setUserCoins} />
-        </React.Fragment>
+        </div>
     )
 }
 
