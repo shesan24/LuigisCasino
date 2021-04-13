@@ -3,12 +3,15 @@ import { bestHand } from './utils/bestHand';
 import randomCard from './utils/randomCard';
 import { Card } from './components/Card';
 import './css/PicturePoker.css';
+import { Link } from 'react-router-dom';
 
 export const PicturePoker = ({ userCoins: coins, setUserCoins: setCoins }) => {
   const initialGameState = {
     round: 0,
     roundStage: 'betting', // betting | result
-    winner: 'tie'
+    winner: 'tie',
+    isGameOver: false,
+    hand: undefined
   };
   const initialBoard = {
     luigisHand: [
@@ -45,47 +48,49 @@ export const PicturePoker = ({ userCoins: coins, setUserCoins: setCoins }) => {
    */
   const handleBetClick = () => {
     if (gameState.roundStage === 'betting' && coins > 0) {
-      setCoins(coins - 1);
-      setBet(bet + 1);
+      setCoins(() => coins - 1);
+      setBet(() => bet + 1);
     }
   };
 
   const handleActionClick = () => {
-    if (action === 'draw') {
+    if (bet !== 0) {
+      if (action === 'draw') {
+        setBoard((prev) => {
+          // make new array
+          const newArray = prev.usrHand.map((card, index) => {
+            // if card is focused
+            if (card[2]) {
+              return [randomCard(), card[1], false];
+            } else {
+              return card;
+            }
+          });
+          return {
+            ...prev,
+            usrHand: newArray
+          };
+        });
+        setGameState({
+          round: 0,
+          roundStage: 'result' // betting | result
+        });
+      } else {
+        setGameState({
+          round: 0,
+          roundStage: 'result' // betting | result
+        });
+      }
       setBoard((prev) => {
-        // make new array
-        const newArray = prev.usrHand.map((card, index) => {
-          // if card is focused
-          if (card[2]) {
-            return [randomCard(), card[1], false];
-          } else {
-            return card;
-          }
+        const newArray = prev.luigisHand.map((card) => {
+          return [card[0], 'front'];
         });
         return {
           ...prev,
-          usrHand: newArray
+          luigisHand: newArray
         };
       });
-      setGameState({
-        round: 0,
-        roundStage: 'result' // betting | result
-      });
-    } else {
-      setGameState({
-        round: 0,
-        roundStage: 'result' // betting | result
-      });
     }
-    setBoard((prev) => {
-      const newArray = prev.luigisHand.map((card) => {
-        return [card[0], 'front'];
-      });
-      return {
-        ...prev,
-        luigisHand: newArray
-      };
-    });
   };
 
   /**
@@ -137,164 +142,212 @@ export const PicturePoker = ({ userCoins: coins, setUserCoins: setCoins }) => {
 
   useEffect(() => {
     setGameState((prev) => {
+      console.log(bestHand(board.usrHand, board.luigisHand)[1][1]);
       return {
         ...prev,
-        winner: bestHand(board.usrHand, board.luigisHand)[0]
+        winner: bestHand(board.usrHand, board.luigisHand)[0],
+        hand: bestHand(board.usrHand, board.luigisHand)[1][1]
       };
     });
   }, [gameState.roundStage]);
+
   useEffect(() => {
     if (gameState.roundStage === 'result') {
       let hand = bestHand(board.usrHand, board.luigisHand)[1][0];
-      console.log('bet:', bet, ' | hand', hand, ' | ', coins);
-      if (gameState.winner === 'user') setCoins(coins + hand + bet * 2);
-      if (gameState.winner === 'luigi') setCoins(coins - hand - bet * 2);
+      console.log('hand', hand, '   coins', coins);
+      if (gameState.winner == 'user') setCoins(coins + (hand + bet));
+      if (gameState.winner == 'luigi') {
+        // console.log('coins', coins - (hand + bet));
+        if (coins - (hand + bet) <= 0) {
+          setGameState((prev) => {
+            console.log('we are here');
+            return {
+              ...prev,
+              roundStage: 'gameover',
+              isGameOver: true
+            };
+          });
+          setCoins(0);
+        } else {
+          setCoins(coins - (hand + bet));
+        }
+      }
+      if (gameState.winner === 'tie') {
+        setCoins(coins + bet);
+      }
     }
-    setBet(0);
   }, [gameState.winner]);
 
   return (
-    <div className="mini-game-container">
-      {/*
+    <>
+      <Link to="/">
+        <button className="back-to--home">Back</button>
+      </Link>
+      <div className="mini-game-container">
+        {/*
         luigi's cards
       */}
-      <h1 className="hand-h1" style={{ marginTop: '0' }}>
-        Luigi's hand
-      </h1>
-      <div className="cards-container">
-        {board.luigisHand.map((card, key) => {
-          return (
-            <Card
-              type={card[0]}
-              face={card[1]}
-              key={key}
-              onClick={() => console.log('yo')}
-            />
-          );
-        })}
-      </div>
-      {/* 
+        <h1 className="hand-h1" style={{ marginTop: '0' }}>
+          Luigi's hand
+        </h1>
+        <div className="cards-container">
+          {board.luigisHand.map((card, key) => {
+            return (
+              <Card
+                type={card[0]}
+                face={card[1]}
+                key={key}
+                onClick={() => console.log('yo')}
+              />
+            );
+          })}
+        </div>
+        {/* 
         users's cards
       */}
-      <h1 className="hand-h1">Your hand</h1>
-      <div className="cards-container users">
-        {board.usrHand.map((card, key) => {
-          return (
-            <Card
-              type={card[0]}
-              face={card[1]}
-              key={key}
-              isFocused={card[2]}
-              onClick={() => handleCardClick(key)}
-            />
-          );
-        })}
-      </div>
-      <div className="actions-container">
-        <div className="game-feed">
-          <h3 className="pph3">
-            <span
-              style={{
-                color: 'rgb(101, 102, 105)',
-                fontWeight: '500',
-                marginRight: '5px'
-              }}
-            >
-              Your coins:
-            </span>{' '}
-            {coins}
-          </h3>
-          <h3 className="pph3">
-            <span
-              style={{
-                color: 'rgb(101, 102, 105)',
-                fontWeight: '500',
-                marginRight: '5px'
-              }}
-            >
-              Current Bet:
-            </span>
-            {bet}
-          </h3>
+        <h1 className="hand-h1">Your hand</h1>
+        <div className="cards-container users">
+          {board.usrHand.map((card, key) => {
+            return (
+              <Card
+                type={card[0]}
+                face={card[1]}
+                key={key}
+                isFocused={card[2]}
+                onClick={() => handleCardClick(key)}
+              />
+            );
+          })}
         </div>
-        <div className="action-btns">
-          {gameState.roundStage === 'betting' ? (
-            <>
-              <button className="ppbtn bet" onClick={handleBetClick}>
-                Bet Coins
-              </button>
-              <button onClick={handleActionClick} className="ppbtn action">
-                {action}
-              </button>
-            </>
+        <div className="actions-container">
+          {gameState.isGameOver ? (
+            <h3>You lose</h3>
           ) : (
             <>
-              <button className="ppbtn bet disabled" onClick={handleBetClick}>
-                Bet Coins
-              </button>
-              <button
-                onClick={handleActionClick}
-                className="ppbtn action disabled"
-              >
-                {action}
-              </button>
+              {' '}
+              <div className="game-feed">
+                <h3 className="pph3">
+                  <span
+                    style={{
+                      color: 'rgb(101, 102, 105)',
+                      fontWeight: '500',
+                      marginRight: '5px'
+                    }}
+                  >
+                    Your coins:
+                  </span>{' '}
+                  {coins}
+                </h3>
+                <h3 className="pph3">
+                  <span
+                    style={{
+                      color: 'rgb(101, 102, 105)',
+                      fontWeight: '500',
+                      marginRight: '5px'
+                    }}
+                  >
+                    Current Bet:
+                  </span>
+                  {bet}
+                </h3>
+              </div>
+              <div className="action-btns">
+                {gameState.roundStage === 'betting' ? (
+                  <>
+                    <button className="ppbtn bet" onClick={handleBetClick}>
+                      Bet Coins
+                    </button>
+                    {bet !== 0 ? (
+                      <button
+                        onClick={handleActionClick}
+                        className="ppbtn action"
+                      >
+                        {action}
+                      </button>
+                    ) : (
+                      <button
+                        onClick={handleActionClick}
+                        className="ppbtn action disabled"
+                      >
+                        {action}
+                      </button>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <button
+                      className="ppbtn bet disabled"
+                      onClick={handleBetClick}
+                    >
+                      Bet Coins
+                    </button>
+                    <button
+                      onClick={handleActionClick}
+                      className="ppbtn action disabled"
+                    >
+                      {action}
+                    </button>
+                  </>
+                )}
+              </div>
             </>
           )}
         </div>
-      </div>
-      <div className="results-container">
-        {gameState.roundStage === 'result' ? (
-          <>
-            <h3
-              style={{
-                marginRight: '30px'
-              }}
-            >
-              <span
+        <div className="results-container">
+          {gameState.roundStage === 'result' ? (
+            <>
+              <h3
                 style={{
-                  color: 'rgb(101, 102, 105)',
-                  fontWeight: '500',
-                  marginRight: '5px'
+                  marginRight: '30px'
                 }}
               >
-                Winner:
-              </span>
-              {gameState.winner}
-            </h3>
-            <button
-              className="ppbtn reset"
-              onClick={() => {
-                setGameState((prev) => {
-                  return {
-                    ...prev,
-                    roundStage: 'betting'
-                  };
-                });
-                setBoard({
-                  luigisHand: [
-                    [randomCard(), 'back'],
-                    [randomCard(), 'back'],
-                    [randomCard(), 'back'],
-                    [randomCard(), 'back'],
-                    [randomCard(), 'back']
-                  ],
-                  usrHand: [
-                    [randomCard(), 'front', false],
-                    [randomCard(), 'front', false],
-                    [randomCard(), 'front', false],
-                    [randomCard(), 'front', false],
-                    [randomCard(), 'front', false]
-                  ]
-                });
-              }}
-            >
-              Next Round
-            </button>
-          </>
-        ) : (
-          ''
-        )}
+                <span
+                  style={{
+                    color: 'rgb(101, 102, 105)',
+                    fontWeight: '500',
+                    marginRight: '5px'
+                  }}
+                >
+                  Winner:
+                </span>
+                {gameState.winner}
+              </h3>
+              <button
+                className="ppbtn reset"
+                onClick={() => {
+                  setGameState((prev) => {
+                    return {
+                      ...prev,
+                      roundStage: 'betting'
+                    };
+                  });
+                  setBoard({
+                    luigisHand: [
+                      [randomCard(), 'back'],
+                      [randomCard(), 'back'],
+                      [randomCard(), 'back'],
+                      [randomCard(), 'back'],
+                      [randomCard(), 'back']
+                    ],
+                    usrHand: [
+                      [randomCard(), 'front', false],
+                      [randomCard(), 'front', false],
+                      [randomCard(), 'front', false],
+                      [randomCard(), 'front', false],
+                      [randomCard(), 'front', false]
+                    ]
+                  });
+                  setBet(0);
+                }}
+              >
+                Next Round
+              </button>
+            </>
+          ) : (
+            ''
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };

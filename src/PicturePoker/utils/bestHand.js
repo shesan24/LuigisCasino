@@ -4,8 +4,9 @@ export function bestHand(usersHand, luigisHand) {
   if (uv[0] > lv[0]) return ['user', uv];
   if (uv[0] < lv[0]) return ['luigi', lv];
   if (uv[0] === lv[0]) {
-    return [tieBreaker(uv, lv), 5];
+    return ['tie', 'tie']
   }
+  return ['user', [0, 'nothing']];
 }
 
 function isFlush(hand) {
